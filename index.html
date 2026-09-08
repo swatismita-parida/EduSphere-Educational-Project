@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EduSphere · Home</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <style>
+    /* ===== BASE STYLES ===== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --bg-primary: #0b0f1a; --bg-secondary: #0f1422; --bg-card: #161d2e;
+      --bg-nav: rgba(11,15,26,0.85); --text-primary: #eef2f6; --text-secondary: #b8c4d4;
+      --text-muted: #6a7a90; --gold: #d4af37; --gold-light: #f6e9b2;
+      --border-color: rgba(212,175,55,0.15); --shadow: 0 8px 32px rgba(0,0,0,0.4);
+      --transition: 0.3s ease;
+    }
+    [data-theme="light"] {
+      --bg-primary: #f4f6fa; --bg-secondary: #e8ecf3; --bg-card: #ffffff;
+      --bg-nav: rgba(255,255,255,0.9); --text-primary: #0b0f1a; --text-secondary: #2d3748;
+      --text-muted: #4a5568; --border-color: rgba(212,175,55,0.25);
+      --shadow: 0 8px 32px rgba(0,0,0,0.08);
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--bg-primary); color: var(--text-primary); overflow-x: hidden; transition: background var(--transition), color var(--transition); }
+    a { text-decoration: none; color: inherit; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
+    .theme-toggle { background: none; border: none; color: var(--text-secondary); font-size: 1.3rem; cursor: pointer; padding: 0.3rem 0.6rem; border-radius: 40px; transition: var(--transition); }
+    .theme-toggle:hover { color: var(--gold); }
+    
+    /* ===== NAV ===== */
+    .main-nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 999; background: var(--bg-nav); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-color); padding: 0.6rem 0; transition: var(--transition); }
+    .nav-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+    .logo { font-size: 1.7rem; font-weight: 800; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.02em; }
+    .nav-links { display: flex; gap: 2rem; font-weight: 500; color: var(--text-secondary); align-items: center; }
+    .nav-links a { transition: var(--transition); font-size: 0.95rem; position: relative; }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-links a::after { content: ''; position: absolute; left: 0; bottom: -4px; width: 0%; height: 2px; background: var(--gold); transition: width 0.25s; }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta { background: var(--gold); color: #0b0f1a !important; padding: 0.5rem 1.4rem; border-radius: 40px; font-weight: 700; }
+    .nav-cta::after { display: none !important; }
+    .nav-cta:hover { background: #e6c75a; transform: scale(1.02); }
+    .hamburger { display: none; background: none; border: none; font-size: 1.8rem; color: var(--text-primary); cursor: pointer; }
+
+    /* ===== HERO ===== */
+    #hero-canvas-wrapper { position: relative; width: 100vw; height: 100vh; overflow: hidden; background: var(--bg-primary); margin-top: 0; }
+    #hero-canvas-wrapper canvas { display: block; width: 100% !important; height: 100% !important; }
+    .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: radial-gradient(circle at 30% 30%, rgba(11,15,26,0.15) 0%, rgba(11,15,26,0.55) 100%); z-index: 10; padding: 2rem; }
+    .hero-overlay h1 { font-size: clamp(3.2rem, 12vw, 6rem); font-weight: 800; letter-spacing: -0.02em; background: linear-gradient(135deg, var(--gold-light) 0%, var(--gold) 80%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 0 60px rgba(212,175,55,0.12); margin-bottom: 0.5rem; }
+    .hero-overlay p { font-size: clamp(1rem, 2.5vw, 1.6rem); font-weight: 300; color: var(--text-secondary); max-width: 700px; margin-bottom: 2rem; text-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+    .btn-gold { pointer-events: auto; background: var(--gold); border: none; padding: 1rem 2.8rem; border-radius: 60px; font-weight: 700; font-size: 1.1rem; color: #0b0f1a; cursor: pointer; box-shadow: 0 12px 30px rgba(212,175,55,0.25); transition: all var(--transition); display: inline-block; }
+    .btn-gold:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(212,175,55,0.4); background: #e6c75a; }
+
+    /* ===== SECTIONS ===== */
+    section { padding: 5rem 0; background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); transition: var(--transition); }
+    section:nth-child(odd) { background: var(--bg-primary); }
+    .section-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: -0.01em; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
+    .section-sub { color: var(--text-secondary); max-width: 700px; font-size: 1.1rem; line-height: 1.7; }
+
+    /* ===== CARDS & GRIDS ===== */
+    .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2.5rem; }
+    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-top: 2.5rem; }
+    .card { background: var(--bg-card); padding: 2rem 1.8rem; border-radius: 24px; border: 1px solid var(--border-color); transition: all var(--transition); box-shadow: var(--shadow); }
+    .card:hover { transform: translateY(-6px); border-color: var(--gold); box-shadow: 0 16px 40px rgba(212,175,55,0.08); }
+    .card h3 { font-size: 1.4rem; margin-bottom: 0.6rem; color: var(--text-primary); }
+    .card p { color: var(--text-secondary); line-height: 1.6; }
+    .card i { font-size: 2.2rem; color: var(--gold); margin-bottom: 0.8rem; }
+    
+    /* ===== FIXED CARD IMAGE (HEIGHT BADHAI & CONTAIN KIA) ===== */
+    .card-img { 
+      width: 100%; 
+      height: 240px; /* Height badha di */
+      object-fit: contain; /* Poora image dikhega */
+      border-radius: 12px; 
+      margin-bottom: 1rem; 
+      display: block; 
+      background: #1f283b; /* Image ke peeche background */
+    }
+
+    /* ===== CLASSROOM IMAGE ===== */
+    .classroom-img { width: 100%; max-height: 350px; border-radius: 24px; border: 1px solid var(--border-color); background: var(--bg-card); overflow: hidden; margin: 1.5rem 0; }
+    .classroom-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ===== STATS & TESTIMONIALS ===== */
+    .achievement-stats { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 2rem; margin: 2rem 0; padding: 2rem 0; }
+    .stat { text-align: center; }
+    .stat-number { font-size: 3rem; font-weight: 800; color: var(--gold); }
+    .stat-label { color: var(--text-secondary); }
+    .testimonial-slider { display: flex; gap: 2rem; overflow-x: auto; padding: 1rem 0.5rem; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; }
+    .testimonial-slider .testimonial { min-width: 300px; flex: 1; background: var(--bg-card); padding: 2rem; border-radius: 24px; border-left: 4px solid var(--gold); scroll-snap-align: start; box-shadow: var(--shadow); }
+    .testimonial p { font-style: italic; color: var(--text-secondary); }
+    .testimonial .author { color: var(--gold); font-weight: 600; margin-top: 0.5rem; }
+    .testimonial .testi-img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; }
+
+    /* ===== FAQ & GALLERY ===== */
+    .faq-item { background: var(--bg-card); border-radius: 16px; margin-bottom: 1rem; border: 1px solid var(--border-color); overflow: hidden; }
+    .faq-question { padding: 1.2rem 1.8rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--text-primary); transition: var(--transition); }
+    .faq-question:hover { background: rgba(212,175,55,0.05); }
+    .faq-question i { transition: transform 0.3s; color: var(--gold); }
+    .faq-item.active .faq-question i { transform: rotate(180deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; padding: 0 1.8rem; color: var(--text-secondary); }
+    .faq-item.active .faq-answer { max-height: 200px; padding: 0 1.8rem 1.5rem; }
+    .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 2rem; }
+    .gallery-item { border-radius: 20px; overflow: hidden; height: 200px; background: var(--bg-card); border: 1px solid var(--border-color); display: flex; align-items: center; justify-content: center; font-size: 3rem; color: var(--gold); transition: var(--transition); cursor: pointer; position: relative; }
+    .gallery-item:hover { transform: scale(1.03); border-color: var(--gold); }
+    .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
+    .gallery-item span { position: absolute; bottom: 10px; background: rgba(0,0,0,0.6); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; color: #fff; }
+
+    /* ===== PRICING ===== */
+    .pricing-toggle { display: flex; gap: 1rem; align-items: center; justify-content: center; margin: 1.5rem 0; }
+    .toggle-switch { width: 56px; height: 30px; background: var(--bg-card); border-radius: 30px; border: 2px solid var(--border-color); cursor: pointer; position: relative; transition: var(--transition); }
+    .toggle-switch.active { border-color: var(--gold); }
+    .toggle-switch::after { content: ''; width: 22px; height: 22px; background: var(--gold); border-radius: 50%; position: absolute; top: 2px; left: 2px; transition: 0.3s; }
+    .toggle-switch.active::after { left: 28px; }
+    .pricing-card .price { font-size: 2.5rem; font-weight: 700; color: var(--gold); }
+    .pricing-card .price span { font-size: 1rem; color: var(--text-muted); }
+
+    /* ===== SCROLL & FOOTER ===== */
+    .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); z-index: 1000; width: 0%; transition: width 0.1s; }
+    .back-to-top { position: fixed; bottom: 2rem; right: 2rem; background: var(--gold); color: #0b0f1a; width: 48px; height: 48px; border-radius: 50%; border: none; font-size: 1.3rem; cursor: pointer; box-shadow: 0 4px 20px rgba(212,175,55,0.3); opacity: 0; visibility: hidden; transition: all var(--transition); z-index: 100; }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .back-to-top:hover { transform: translateY(-4px); background: #e6c75a; }
+    .footer { background: #060a12; padding: 3rem 0; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 2rem; }
+    .footer a { color: var(--gold); }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+    .footer-grid h4 { color: var(--gold); margin-bottom: 1rem; }
+    .footer-grid ul { list-style: none; }
+    .footer-grid ul li { margin-bottom: 0.5rem; }
+    .footer-grid ul li a { color: var(--text-muted); transition: var(--transition); }
+    .footer-grid ul li a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid var(--border-color); padding-top: 1.5rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; font-size: 0.9rem; }
+    .reveal { opacity: 0; transform: translateY(40px); }
+
+    @media (max-width: 768px) {
+      .hamburger { display: block; }
+      .nav-links { display: none; flex-direction: column; width: 100%; padding: 1rem 0; gap: 1.2rem; background: var(--bg-nav); backdrop-filter: blur(14px); border-radius: 20px; margin-top: 0.5rem; }
+      .nav-links.open { display: flex; }
+      .nav-inner { flex-wrap: wrap; }
+      .container { padding: 0 1.2rem; }
+      section { padding: 3rem 0; }
+      .hero-overlay h1 { font-size: 2.8rem; }
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+      .testimonial-slider .testimonial { min-width: 260px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="scroll-progress" id="scrollProgress"></div>
+  <button class="back-to-top" id="backToTop"><i class="fas fa-arrow-up"></i></button>
+
+  <nav class="main-nav">
+    <div class="container nav-inner">
+      <span class="logo">EduSphere</span>
+      <button class="hamburger" id="hamburger"><i class="fas fa-bars"></i></button>
+      <div class="nav-links" id="navLinks">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="contact.html">Contact</a>
+        <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+        <a href="index.html" class="nav-cta">Start Learning</a>
+      </div>
+    </div>
+  </nav>
+
+  <div id="hero-canvas-wrapper">
+    <div class="hero-overlay">
+      <h1>EduSphere</h1>
+      <p>Where physics meets interactive learning — explore, experiment, and excel.</p>
+      <button class="btn-gold" id="cta-hero">Start Your Learning Journey</button>
+    </div>
+  </div>
+
+  <section id="about-home">
+    <div class="container">
+      <h2 class="section-title reveal">About EduSphere</h2>
+      <p class="section-sub reveal">We blend advanced 3D physics with modern pedagogy. Our interactive playground lets you grasp complex concepts through real-time simulation.</p>
+      
+      <!-- Institute/Campus ki poori photo -->
+      <div class="classroom-img reveal">
+        <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80" alt="Institute" />
+      </div>
+      
+      <div class="grid-2">
+        <div class="card reveal"><i class="fas fa-bullseye"></i><h3>Concept Explainer</h3><p>Visualize Newtonian mechanics, collisions, and energy conservation in immersive 3D.</p></div>
+        <div class="card reveal"><i class="fas fa-hand-pointer"></i><h3>Interactive Playground</h3><p>Grab objects, toss them, and see realistic gravity &amp; collisions with reactive feedback.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="courses-home">
+    <div class="container">
+      <h2 class="section-title reveal">Courses &amp; Programs</h2>
+      <div class="grid-2">
+        
+        <!-- Physics Foundations -->
+        <div class="card reveal">
+          <img src="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?auto=format&fit=crop&w=400&q=80" class="card-img" alt="Physics" />
+          <i class="fas fa-atom"></i><h3>Physics Foundations</h3><p>Kinematics, dynamics, and energy — interactive 3D modules.</p>
+        </div>
+
+        <!-- Engineering Mechanics -->
+        <div class="card reveal">
+          <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=400&q=80" class="card-img" alt="Engineering" />
+          <i class="fas fa-cogs"></i><h3>Engineering Mechanics</h3><p>Rigid body dynamics, collisions, and real-world applications.</p>
+        </div>
+
+        <!-- EdTech Pro -->
+        <div class="card reveal">
+          <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=80" class="card-img" alt="EdTech" />
+          <i class="fas fa-laptop-code"></i><h3>EdTech Pro</h3><p>For educators: integrate 3D physics into your curriculum.</p>
+        </div>
+
+        <!-- Summer Lab -->
+        <div class="card reveal">
+          <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=400&q=80" class="card-img" alt="Lab" />
+          <i class="fas fa-flask"></i><h3>Summer Lab</h3><p>Hands-on projects with Three.js &amp; Cannon-es.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="why-choose">
+    <div class="container">
+      <h2 class="section-title reveal">Why Choose Us</h2>
+      <div class="grid-3">
+        <div class="card reveal"><i class="fas fa-bolt"></i><h3>Real-time Physics</h3><p>Powered by Cannon-es, every interaction is physically accurate.</p></div>
+        <div class="card reveal"><i class="fas fa-palette"></i><h3>Premium Visuals</h3><p>Luxury gold &amp; navy aesthetic, crafted for inspiration.</p></div>
+        <div class="card reveal"><i class="fas fa-trophy"></i><h3>12+ Awards</h3><p>95% student satisfaction · 10k+ learners.</p></div>
+      </div>
+      <div class="achievement-stats">
+        <div class="stat reveal"><div class="stat-number" data-count="10000">0</div><div class="stat-label">Learners</div></div>
+        <div class="stat reveal"><div class="stat-number" data-count="98">0</div><div class="stat-label">Success Rate %</div></div>
+        <div class="stat reveal"><div class="stat-number" data-count="4.9">0</div><div class="stat-label">Average Rating ★</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FACULTY SECTION (UPDATED) ===== -->
+  <section id="faculty">
+    <div class="container">
+      <h2 class="section-title reveal">Faculty &amp; Voices</h2>
+      <div class="grid-2">
+        
+        <!-- Dr. Elena (Face dikhega) -->
+        <div class="card reveal">
+          <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80" class="card-img" alt="Dr. Elena" />
+          <i class="fas fa-user-graduate"></i><h3>Dr. Elena Voss</h3><p>Lead physicist, 15 years in computational dynamics.</p>
+        </div>
+
+        <!-- Prof. James (Face dikhega) -->
+        <div class="card reveal">
+          <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80" class="card-img" alt="Prof. James" />
+          <i class="fas fa-user-tie"></i><h3>Prof. James Chen</h3><p>Interactive media &amp; Three.js specialist.</p>
+        </div>
+      </div>
+      <div class="testimonial-slider reveal">
+        <div class="testimonial">
+          <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80" class="testi-img" alt="Student" />
+          <p>"EduSphere transformed how I understand physics. The 3D playground makes abstract concepts tangible."</p>
+          <div class="author">— Alumni, MIT</div>
+        </div>
+        <div class="testimonial">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" class="testi-img" alt="Teacher" />
+          <p>"The interactive physics simulations are incredible. My students finally enjoy learning mechanics!"</p>
+          <div class="author">— High School Teacher</div>
+        </div>
+        <div class="testimonial">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=100&q=80" class="testi-img" alt="Student" />
+          <p>"Best EdTech platform I've used. The drag-and-throw physics is addictive and educational."</p>
+          <div class="author">— Engineering Student</div>
+        </div>
+      </div>
+      <div style="margin-top:2rem; display:flex; gap:1.5rem; flex-wrap:wrap;">
+        <span class="reveal" style="background:var(--bg-card); padding:0.5rem 1.2rem; border-radius:40px; border:1px solid var(--border-color);"><i class="fas fa-calendar-alt"></i> Annual Physics Fest · Dec 12</span>
+        <span class="reveal" style="background:var(--bg-card); padding:0.5rem 1.2rem; border-radius:40px; border:1px solid var(--border-color);"><i class="fas fa-video"></i> Webinar: 3D in Education</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="container">
+      <h2 class="section-title reveal">Frequently Asked Questions</h2>
+      <div class="faq-item reveal">
+        <div class="faq-question">What is EduSphere? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer">EduSphere is an interactive 3D physics learning platform for students, educators, and enthusiasts.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-question">Do I need to install anything? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer">No! Just open the website in your browser. The 3D physics runs directly in the browser.</div>
+      </div>
+      <div class="faq-item reveal">
+        <div class="faq-question">Is it free to use? <i class="fas fa-chevron-down"></i></div>
+        <div class="faq-answer">Yes, basic access is free. Premium courses and advanced features are available with a subscription.</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="gallery">
+    <div class="container">
+      <h2 class="section-title reveal">Gallery</h2>
+      
+      <!-- Gallery (Topic ke hisaab se images) -->
+      <div class="gallery-grid">
+        
+        <!-- 3D Physics -->
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?auto=format&fit=crop&w=400&q=80" alt="3D Physics" />
+          <span>3D Physics</span>
+        </div>
+
+        <!-- Classroom -->
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=400&q=80" alt="Classroom" />
+          <span>Classroom</span>
+        </div>
+
+        <!-- VR Lab -->
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=400&q=80" alt="VR Lab" />
+          <span>VR Lab</span>
+        </div>
+
+        <!-- Research -->
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=400&q=80" alt="Research" />
+          <span>Research</span>
+        </div>
+
+        <!-- Projects -->
+        <div class="gallery-item">
+          <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=400&q=80" alt="Projects" />
+          <span>Projects</span>
+        </div>
+
+        <!-- Global -->
+        <div class="gallery-item">
+          <img src="/global.png" alt="Global" />
+          <span>Global</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="pricing">
+    <div class="container" style="text-align:center;">
+      <h2 class="section-title reveal">Choose Your Plan</h2>
+      <div class="pricing-toggle reveal">
+        <span>Monthly</span>
+        <div class="toggle-switch" id="pricingToggle"></div>
+        <span>Yearly <small style="color:var(--gold);">(Save 20%)</small></span>
+      </div>
+      <div class="grid-3">
+        <div class="card pricing-card reveal"><h3>Starter</h3><div class="price">$0 <span>/mo</span></div><p>Basic access, 3D playground</p></div>
+        <div class="card pricing-card reveal" style="border-color:var(--gold);"><h3>Pro</h3><div class="price" id="proPrice">$19 <span>/mo</span></div><p>Full courses, advanced physics</p></div>
+        <div class="card pricing-card reveal"><h3>Enterprise</h3><div class="price" id="enterprisePrice">$49 <span>/mo</span></div><p>Custom solutions, dedicated support</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="admission">
+    <div class="container" style="text-align:center;">
+      <h2 class="section-title reveal">Ready to explore?</h2>
+      <p class="section-sub reveal" style="margin:0 auto 2rem;">Join our next cohort and experience the future of learning.</p>
+      <button class="btn-gold reveal" id="cta-admission">Start Your Learning Journey</button>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>EduSphere</h4>
+          <p style="color:var(--text-muted);">Interactive 3D physics learning platform.</p>
+        </div>
+        <div>
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="courses.html">Courses</a></li>
+            <li><a href="contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Contact</h4>
+          <ul>
+            <li>hello@edusphere.io</li>
+            <li>+1 (800) 555-EDU</li>
+            <li>Virtual · Global</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Follow Us</h4>
+          <div style="display:flex; gap:1rem; font-size:1.5rem;">
+            <a href="#"><i class="fab fa-github"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+            <a href="#"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 EduSphere. All rights reserved.</span>
+        <span>Built with Three.js, Cannon-es, GSAP</span>
+      </div>
+    </div>
+  </footer>
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+        "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/",
+        "cannon-es": "https://cdn.jsdelivr.net/npm/cannon-es@0.20.0/dist/cannon-es.js"
+      }
+    }
+  </script>
+  <script>
+    // Theme toggle
+    const themeToggle = document.getElementById('themeToggle');
+    let darkMode = true;
+    themeToggle.addEventListener('click', () => {
+      darkMode = !darkMode;
+      document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+      themeToggle.innerHTML = darkMode ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+    });
+
+    // Hamburger
+    document.getElementById('hamburger').addEventListener('click', () => {
+      document.getElementById('navLinks').classList.toggle('open');
+    });
+
+    // Scroll progress & back to top
+    window.addEventListener('scroll', () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+      document.getElementById('scrollProgress').style.width = progress + '%';
+      document.getElementById('backToTop').classList.toggle('visible', scrollTop > 300);
+    });
+    document.getElementById('backToTop').addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Animated counters
+    const counters = document.querySelectorAll('.stat-number');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const target = parseFloat(entry.target.dataset.count);
+          let current = 0;
+          const increment = target / 50;
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= target) {
+              entry.target.textContent = target + (target === 4.9 ? '★' : '');
+              clearInterval(timer);
+            } else {
+              entry.target.textContent = Math.floor(current);
+            }
+          }, 30);
+        }
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(c => observer.observe(c));
+
+    // FAQ Accordion
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => {
+        const item = q.parentElement;
+        item.classList.toggle('active');
+      });
+    });
+
+    // Pricing Toggle
+    const toggle = document.getElementById('pricingToggle');
+    let yearly = false;
+    toggle.addEventListener('click', () => {
+      yearly = !yearly;
+      toggle.classList.toggle('active');
+      const pro = document.getElementById('proPrice');
+      const ent = document.getElementById('enterprisePrice');
+      if (yearly) {
+        pro.innerHTML = '$15 <span>/mo</span>';
+        ent.innerHTML = '$39 <span>/mo</span>';
+      } else {
+        pro.innerHTML = '$19 <span>/mo</span>';
+        ent.innerHTML = '$49 <span>/mo</span>';
+      }
+    });
+
+    // GSAP Reveals
+    gsap.registerPlugin(ScrollTrigger);
+    document.querySelectorAll('.reveal').forEach(el => {
+      gsap.fromTo(el, { opacity: 0, y: 50 }, {
+        opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
+      });
+    });
+
+    // CTA Buttons - Fixed to go to Contact page
+    document.getElementById('cta-hero')?.addEventListener('click', () => {
+      window.location.href = 'contact.html'; // Navigates to contact page
+    });
+    document.getElementById('cta-admission')?.addEventListener('click', () => {
+      window.location.href = 'contact.html'; // Navigates to contact page
+    });
+
+    // Three.js Physics (Same as before)
+    const wrapper = document.getElementById('hero-canvas-wrapper');
+    if (wrapper) {
+      import('three').then(async (THREE) => {
+        const CANNON = await import('cannon-es');
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x0b0f1a);
+        const camera = new THREE.PerspectiveCamera(45, wrapper.clientWidth / wrapper.clientHeight, 0.1, 1000);
+        camera.position.set(6, 4, 12);
+        camera.lookAt(0, 0, 0);
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: false });
+        renderer.setSize(wrapper.clientWidth, wrapper.clientHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+        wrapper.appendChild(renderer.domElement);
+
+        const ambientLight = new THREE.AmbientLight(0x404060);
+        scene.add(ambientLight);
+        const mainLight = new THREE.DirectionalLight(0xffeedd, 1.2);
+        mainLight.position.set(5, 10, 7);
+        mainLight.castShadow = true;
+        mainLight.shadow.mapSize.width = 1024;
+        mainLight.shadow.mapSize.height = 1024;
+        scene.add(mainLight);
+        const fillLight = new THREE.DirectionalLight(0x4466ff, 0.4);
+        fillLight.position.set(-5, 2, 5);
+        scene.add(fillLight);
+        const backLight = new THREE.PointLight(0xd4af37, 0.6);
+        backLight.position.set(-2, 1, -5);
+        scene.add(backLight);
+        const rimLight = new THREE.PointLight(0xd4af37, 0.3);
+        rimLight.position.set(3, 2, -4);
+        scene.add(rimLight);
+
+        const floorGeo = new THREE.PlaneGeometry(14, 14);
+        const floorMat = new THREE.ShadowMaterial({ opacity: 0.4, color: 0x000000 });
+        const floor = new THREE.Mesh(floorGeo, floorMat);
+        floor.rotation.x = -Math.PI / 2;
+        floor.position.y = -1.5;
+        floor.receiveShadow = true;
+        scene.add(floor);
+        const gridHelper = new THREE.GridHelper(12, 16, 0xd4af37, 0x3a4a6a);
+        gridHelper.position.y = -1.4;
+        scene.add(gridHelper);
+
+        const world = new CANNON.World();
+        world.gravity.set(0, -9.82, 0);
+        world.broadphase = new CANNON.SAPBroadphase(world);
+        world.defaultContactMaterial.friction = 0.5;
+        const groundShape = new CANNON.Plane();
+        const groundBody = new CANNON.Body({ mass: 0 });
+        groundBody.addShape(groundShape);
+        groundBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2);
+        groundBody.position.y = -1.5;
+        world.addBody(groundBody);
+
+        const objects = [];
+        const colors = [0xd4af37, 0x4a7db4, 0xe67e22, 0x2ecc71, 0xe74c3c, 0x9b59b6];
+        function createPhysicsObject(shape, pos, size, color) {
+          let mesh;
+          if (shape === 'sphere') {
+            const geo = new THREE.SphereGeometry(size, 32, 32);
+            const mat = new THREE.MeshStandardMaterial({ color, roughness: 0.2, metalness: 0.6, emissive: new THREE.Color(color).multiplyScalar(0.1) });
+            mesh = new THREE.Mesh(geo, mat);
+          } else {
+            const geo = new THREE.BoxGeometry(size, size, size);
+            const mat = new THREE.MeshStandardMaterial({ color, roughness: 0.3, metalness: 0.4, emissive: new THREE.Color(color).multiplyScalar(0.05) });
+            mesh = new THREE.Mesh(geo, mat);
+          }
+          mesh.castShadow = true;
+          mesh.receiveShadow = true;
+          mesh.position.copy(pos);
+          scene.add(mesh);
+          let body;
+          if (shape === 'sphere') {
+            body = new CANNON.Body({ mass: 1 });
+            body.addShape(new CANNON.Sphere(size));
+          } else {
+            body = new CANNON.Body({ mass: 1 });
+            body.addShape(new CANNON.Box(new CANNON.Vec3(size/2, size/2, size/2)));
+          }
+          body.position.set(pos.x, pos.y, pos.z);
+          world.addBody(body);
+          return { mesh, body, shape, size };
+        }
+        const positions = [
+          { x: -2.5, y: 2, z: 1.5 }, { x: 0, y: 3, z: -1 }, { x: 2.8, y: 1.5, z: 2 },
+          { x: -1.8, y: 4, z: -2 }, { x: 1.5, y: 2.5, z: -2.5 }, { x: -0.5, y: 5, z: 0.5 },
+          { x: 3.2, y: 3.2, z: -1.2 }, { x: -3, y: 2.8, z: -1.8 }
+        ];
+        const shapes = ['sphere', 'box', 'sphere', 'box', 'sphere', 'box', 'sphere', 'box'];
+        positions.forEach((p, i) => {
+          const color = colors[i % colors.length];
+          const size = 0.5 + Math.random() * 0.4;
+          const shape = shapes[i % shapes.length];
+          const obj = createPhysicsObject(shape, new THREE.Vector3(p.x, p.y, p.z), size, color);
+          objects.push(obj);
+        });
+
+        let selectedBody = null, selectedMesh = null;
+        let dragPlane = new THREE.Plane(), offset = new THREE.Vector3();
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        function onPointerDown(event) {
+          const rect = renderer.domElement.getBoundingClientRect();
+          mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+          mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+          raycaster.setFromCamera(mouse, camera);
+          const meshes = objects.map(o => o.mesh);
+          const intersects = raycaster.intersectObjects(meshes);
+          if (intersects.length > 0) {
+            const hit = intersects[0].object;
+            const obj = objects.find(o => o.mesh === hit);
+            if (obj) {
+              selectedBody = obj.body;
+              selectedMesh = obj.mesh;
+              selectedBody.velocity.set(0, 0, 0);
+              const planeNormal = new THREE.Vector3(0, 0, 1).applyQuaternion(camera.quaternion);
+              dragPlane.setFromNormalAndCoplanarPoint(planeNormal, selectedMesh.position);
+              const pt = new THREE.Vector3();
+              raycaster.ray.intersectPlane(dragPlane, pt);
+              if (pt) offset.copy(pt).sub(selectedMesh.position);
+              if (selectedMesh.material) {
+                selectedMesh.material.emissive.setHex(0xd4af37);
+                setTimeout(() => { if (selectedMesh.material) selectedMesh.material.emissive.setHex(0x000000); }, 150);
+              }
+            }
+          }
+        }
+        function onPointerMove(event) {
+          if (!selectedBody) return;
+          const rect = renderer.domElement.getBoundingClientRect();
+          mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
+          mouse.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
+          raycaster.setFromCamera(mouse, camera);
+          const pt = new THREE.Vector3();
+          raycaster.ray.intersectPlane(dragPlane, pt);
+          if (pt) {
+            const newPos = pt.clone().sub(offset);
+            newPos.x = Math.min(5, Math.max(-5, newPos.x));
+            newPos.z = Math.min(5, Math.max(-5, newPos.z));
+            newPos.y = Math.max(-1, newPos.y);
+            selectedBody.position.set(newPos.x, newPos.y, newPos.z);
+            selectedBody.velocity.set(0, 0, 0);
+          }
+        }
+        function onPointerUp(event) {
+          if (selectedBody) {
+            const vel = new THREE.Vector3((event.movementX || 0) * 0.03, (event.movementY || 0) * 0.03, 0);
+            selectedBody.velocity.set(vel.x, vel.y + 1.5, vel.z);
+            selectedBody = null;
+            selectedMesh = null;
+          }
+        }
+        renderer.domElement.addEventListener('pointerdown', onPointerDown);
+        window.addEventListener('pointermove', onPointerMove);
+        window.addEventListener('pointerup', onPointerUp);
+        renderer.domElement.addEventListener('touchstart', (e) => {
+          e.preventDefault();
+          const touch = e.touches[0];
+          onPointerDown({ clientX: touch.clientX, clientY: touch.clientY });
+        }, { passive: false });
+        window.addEventListener('touchmove', (e) => {
+          const touch = e.touches[0];
+          if (touch) onPointerMove({ clientX: touch.clientX, clientY: touch.clientY });
+        }, { passive: false });
+        window.addEventListener('touchend', (e) => {
+          onPointerUp({ movementX: 0, movementY: 0 });
+        });
+
+        world.addEventListener('postStep', () => {
+          for (let i = 0; i < objects.length; i++) {
+            const obj = objects[i];
+            const speed = obj.body.velocity.length();
+            if (speed > 2.5 && obj.mesh.material) {
+              obj.mesh.material.emissive.setHex(0xd4af37);
+              setTimeout(() => { if (obj.mesh.material) obj.mesh.material.emissive.setHex(0x000000); }, 200);
+            }
+          }
+        });
+
+        function animate() {
+          requestAnimationFrame(animate);
+          world.step(1/60);
+          objects.forEach(obj => {
+            obj.mesh.position.copy(obj.body.position);
+            obj.mesh.quaternion.copy(obj.body.quaternion);
+          });
+          renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+          const w = wrapper.clientWidth;
+          const h = wrapper.clientHeight;
+          camera.aspect = w / h;
+          camera.updateProjectionMatrix();
+          renderer.setSize(w, h);
+        });
+        window.addEventListener('scroll', () => {
+          const y = window.scrollY / window.innerHeight;
+          mainLight.position.y = 10 + y * 3;
+          rimLight.intensity = 0.3 + y * 0.2;
+        });
+      });
+    }
+  </script>
+</body>
+</html>
