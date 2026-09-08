@@ -1,10 +1,3 @@
-/* ============================================================
-   FILE: script.js
-   PURPOSE: 3D Physics engine for Home page
-   TECHNOLOGIES: Three.js, Cannon-es
-   FEATURES: Gravity, collisions, drag & throw, color effects
-   ============================================================ */
-
 import * as THREE from 'three';
 import * as CANNON from 'cannon-es';
 
