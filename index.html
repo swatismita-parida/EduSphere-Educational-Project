@@ -11,7 +11,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <style>
-    /* ===== BASE STYLES ===== */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
       --bg-primary: #0b0f1a; --bg-secondary: #0f1422; --bg-card: #161d2e;
@@ -32,8 +31,6 @@
     .container { max-width: 1280px; margin: 0 auto; padding: 0 2rem; }
     .theme-toggle { background: none; border: none; color: var(--text-secondary); font-size: 1.3rem; cursor: pointer; padding: 0.3rem 0.6rem; border-radius: 40px; transition: var(--transition); }
     .theme-toggle:hover { color: var(--gold); }
-    
-    /* ===== NAV ===== */
     .main-nav { position: fixed; top: 0; left: 0; width: 100%; z-index: 999; background: var(--bg-nav); backdrop-filter: blur(14px); border-bottom: 1px solid var(--border-color); padding: 0.6rem 0; transition: var(--transition); }
     .nav-inner { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
     .logo { font-size: 1.7rem; font-weight: 800; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -0.02em; }
@@ -47,7 +44,7 @@
     .nav-cta:hover { background: #e6c75a; transform: scale(1.02); }
     .hamburger { display: none; background: none; border: none; font-size: 1.8rem; color: var(--text-primary); cursor: pointer; }
 
-    /* ===== HERO ===== */
+    /* HERO CANVAS */
     #hero-canvas-wrapper { position: relative; width: 100vw; height: 100vh; overflow: hidden; background: var(--bg-primary); margin-top: 0; }
     #hero-canvas-wrapper canvas { display: block; width: 100% !important; height: 100% !important; }
     .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; background: radial-gradient(circle at 30% 30%, rgba(11,15,26,0.15) 0%, rgba(11,15,26,0.55) 100%); z-index: 10; padding: 2rem; }
@@ -56,13 +53,12 @@
     .btn-gold { pointer-events: auto; background: var(--gold); border: none; padding: 1rem 2.8rem; border-radius: 60px; font-weight: 700; font-size: 1.1rem; color: #0b0f1a; cursor: pointer; box-shadow: 0 12px 30px rgba(212,175,55,0.25); transition: all var(--transition); display: inline-block; }
     .btn-gold:hover { transform: translateY(-4px); box-shadow: 0 18px 40px rgba(212,175,55,0.4); background: #e6c75a; }
 
-    /* ===== SECTIONS ===== */
+    /* SECTIONS */
     section { padding: 5rem 0; background: var(--bg-secondary); border-bottom: 1px solid var(--border-color); transition: var(--transition); }
     section:nth-child(odd) { background: var(--bg-primary); }
     .section-title { font-size: 2.5rem; font-weight: 700; margin-bottom: 1.5rem; letter-spacing: -0.01em; background: linear-gradient(135deg, var(--gold-light), var(--gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; display: inline-block; }
     .section-sub { color: var(--text-secondary); max-width: 700px; font-size: 1.1rem; line-height: 1.7; }
 
-    /* ===== CARDS & GRIDS ===== */
     .grid-2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; margin-top: 2.5rem; }
     .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; margin-top: 2.5rem; }
     .card { background: var(--bg-card); padding: 2rem 1.8rem; border-radius: 24px; border: 1px solid var(--border-color); transition: all var(--transition); box-shadow: var(--shadow); }
@@ -70,23 +66,9 @@
     .card h3 { font-size: 1.4rem; margin-bottom: 0.6rem; color: var(--text-primary); }
     .card p { color: var(--text-secondary); line-height: 1.6; }
     .card i { font-size: 2.2rem; color: var(--gold); margin-bottom: 0.8rem; }
-    
-    /* ===== FIXED CARD IMAGE (HEIGHT BADHAI & CONTAIN KIA) ===== */
-    .card-img { 
-      width: 100%; 
-      height: 240px; /* Height badha di */
-      object-fit: contain; /* Poora image dikhega */
-      border-radius: 12px; 
-      margin-bottom: 1rem; 
-      display: block; 
-      background: #1f283b; /* Image ke peeche background */
-    }
-
-    /* ===== CLASSROOM IMAGE ===== */
+    .card-img { width: 100%; height: 240px; object-fit: contain; border-radius: 12px; margin-bottom: 1rem; display: block; background: #1f283b; }
     .classroom-img { width: 100%; max-height: 350px; border-radius: 24px; border: 1px solid var(--border-color); background: var(--bg-card); overflow: hidden; margin: 1.5rem 0; }
     .classroom-img img { width: 100%; height: 100%; object-fit: cover; display: block; }
-
-    /* ===== STATS & TESTIMONIALS ===== */
     .achievement-stats { display: flex; flex-wrap: wrap; justify-content: space-around; gap: 2rem; margin: 2rem 0; padding: 2rem 0; }
     .stat { text-align: center; }
     .stat-number { font-size: 3rem; font-weight: 800; color: var(--gold); }
@@ -96,8 +78,6 @@
     .testimonial p { font-style: italic; color: var(--text-secondary); }
     .testimonial .author { color: var(--gold); font-weight: 600; margin-top: 0.5rem; }
     .testimonial .testi-img { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; margin-bottom: 1rem; }
-
-    /* ===== FAQ & GALLERY ===== */
     .faq-item { background: var(--bg-card); border-radius: 16px; margin-bottom: 1rem; border: 1px solid var(--border-color); overflow: hidden; }
     .faq-question { padding: 1.2rem 1.8rem; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: var(--text-primary); transition: var(--transition); }
     .faq-question:hover { background: rgba(212,175,55,0.05); }
@@ -110,8 +90,6 @@
     .gallery-item:hover { transform: scale(1.03); border-color: var(--gold); }
     .gallery-item img { width: 100%; height: 100%; object-fit: cover; }
     .gallery-item span { position: absolute; bottom: 10px; background: rgba(0,0,0,0.6); padding: 0.3rem 1rem; border-radius: 20px; font-size: 0.8rem; color: #fff; }
-
-    /* ===== PRICING ===== */
     .pricing-toggle { display: flex; gap: 1rem; align-items: center; justify-content: center; margin: 1.5rem 0; }
     .toggle-switch { width: 56px; height: 30px; background: var(--bg-card); border-radius: 30px; border: 2px solid var(--border-color); cursor: pointer; position: relative; transition: var(--transition); }
     .toggle-switch.active { border-color: var(--gold); }
@@ -119,8 +97,6 @@
     .toggle-switch.active::after { left: 28px; }
     .pricing-card .price { font-size: 2.5rem; font-weight: 700; color: var(--gold); }
     .pricing-card .price span { font-size: 1rem; color: var(--text-muted); }
-
-    /* ===== SCROLL & FOOTER ===== */
     .scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--gold), var(--gold-light)); z-index: 1000; width: 0%; transition: width 0.1s; }
     .back-to-top { position: fixed; bottom: 2rem; right: 2rem; background: var(--gold); color: #0b0f1a; width: 48px; height: 48px; border-radius: 50%; border: none; font-size: 1.3rem; cursor: pointer; box-shadow: 0 4px 20px rgba(212,175,55,0.3); opacity: 0; visibility: hidden; transition: all var(--transition); z-index: 100; }
     .back-to-top.visible { opacity: 1; visibility: visible; }
@@ -180,12 +156,9 @@
     <div class="container">
       <h2 class="section-title reveal">About EduSphere</h2>
       <p class="section-sub reveal">We blend advanced 3D physics with modern pedagogy. Our interactive playground lets you grasp complex concepts through real-time simulation.</p>
-      
-      <!-- Institute/Campus ki poori photo -->
       <div class="classroom-img reveal">
         <img src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=1200&q=80" alt="Institute" />
       </div>
-      
       <div class="grid-2">
         <div class="card reveal"><i class="fas fa-bullseye"></i><h3>Concept Explainer</h3><p>Visualize Newtonian mechanics, collisions, and energy conservation in immersive 3D.</p></div>
         <div class="card reveal"><i class="fas fa-hand-pointer"></i><h3>Interactive Playground</h3><p>Grab objects, toss them, and see realistic gravity &amp; collisions with reactive feedback.</p></div>
@@ -197,26 +170,18 @@
     <div class="container">
       <h2 class="section-title reveal">Courses &amp; Programs</h2>
       <div class="grid-2">
-        
-        <!-- Physics Foundations -->
         <div class="card reveal">
           <img src="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?auto=format&fit=crop&w=400&q=80" class="card-img" alt="Physics" />
           <i class="fas fa-atom"></i><h3>Physics Foundations</h3><p>Kinematics, dynamics, and energy — interactive 3D modules.</p>
         </div>
-
-        <!-- Engineering Mechanics -->
         <div class="card reveal">
           <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=400&q=80" class="card-img" alt="Engineering" />
           <i class="fas fa-cogs"></i><h3>Engineering Mechanics</h3><p>Rigid body dynamics, collisions, and real-world applications.</p>
         </div>
-
-        <!-- EdTech Pro -->
         <div class="card reveal">
           <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=400&q=80" class="card-img" alt="EdTech" />
           <i class="fas fa-laptop-code"></i><h3>EdTech Pro</h3><p>For educators: integrate 3D physics into your curriculum.</p>
         </div>
-
-        <!-- Summer Lab -->
         <div class="card reveal">
           <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=400&q=80" class="card-img" alt="Lab" />
           <i class="fas fa-flask"></i><h3>Summer Lab</h3><p>Hands-on projects with Three.js &amp; Cannon-es.</p>
@@ -241,19 +206,14 @@
     </div>
   </section>
 
-  <!-- ===== FACULTY SECTION (UPDATED) ===== -->
   <section id="faculty">
     <div class="container">
       <h2 class="section-title reveal">Faculty &amp; Voices</h2>
       <div class="grid-2">
-        
-        <!-- Dr. Elena (Face dikhega) -->
         <div class="card reveal">
           <img src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=600&q=80" class="card-img" alt="Dr. Elena" />
           <i class="fas fa-user-graduate"></i><h3>Dr. Elena Voss</h3><p>Lead physicist, 15 years in computational dynamics.</p>
         </div>
-
-        <!-- Prof. James (Face dikhega) -->
         <div class="card reveal">
           <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=600&q=80" class="card-img" alt="Prof. James" />
           <i class="fas fa-user-tie"></i><h3>Prof. James Chen</h3><p>Interactive media &amp; Three.js specialist.</p>
@@ -304,41 +264,27 @@
   <section id="gallery">
     <div class="container">
       <h2 class="section-title reveal">Gallery</h2>
-      
-      <!-- Gallery (Topic ke hisaab se images) -->
       <div class="gallery-grid">
-        
-        <!-- 3D Physics -->
         <div class="gallery-item">
           <img src="https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?auto=format&fit=crop&w=400&q=80" alt="3D Physics" />
           <span>3D Physics</span>
         </div>
-
-        <!-- Classroom -->
         <div class="gallery-item">
           <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=400&q=80" alt="Classroom" />
           <span>Classroom</span>
         </div>
-
-        <!-- VR Lab -->
         <div class="gallery-item">
           <img src="https://images.unsplash.com/photo-1592478411213-6153e4ebc07d?auto=format&fit=crop&w=400&q=80" alt="VR Lab" />
           <span>VR Lab</span>
         </div>
-
-        <!-- Research -->
         <div class="gallery-item">
           <img src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=400&q=80" alt="Research" />
           <span>Research</span>
         </div>
-
-        <!-- Projects -->
         <div class="gallery-item">
           <img src="https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=400&q=80" alt="Projects" />
           <span>Projects</span>
         </div>
-
-        <!-- Global -->
         <div class="gallery-item">
           <img src="/global.png" alt="Global" />
           <span>Global</span>
@@ -374,40 +320,14 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
-        <div>
-          <h4>EduSphere</h4>
-          <p style="color:var(--text-muted);">Interactive 3D physics learning platform.</p>
-        </div>
-        <div>
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="courses.html">Courses</a></li>
-            <li><a href="contact.html">Contact</a></li>
-          </ul>
-        </div>
-        <div>
-          <h4>Contact</h4>
-          <ul>
-            <li>hello@edusphere.io</li>
-            <li>+1 (800) 555-EDU</li>
-            <li>Virtual · Global</li>
-          </ul>
-        </div>
-        <div>
-          <h4>Follow Us</h4>
-          <div style="display:flex; gap:1rem; font-size:1.5rem;">
-            <a href="#"><i class="fab fa-github"></i></a>
-            <a href="#"><i class="fab fa-twitter"></i></a>
-            <a href="#"><i class="fab fa-linkedin"></i></a>
-            <a href="#"><i class="fab fa-youtube"></i></a>
-          </div>
-        </div>
+        <div><h4>EduSphere</h4><p style="color:var(--text-muted);">Interactive 3D physics learning platform.</p></div>
+        <div><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li><li><a href="courses.html">Courses</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+        <div><h4>Contact</h4><ul><li>hello@edusphere.io</li><li>+1 (800) 555-EDU</li><li>Virtual · Global</li></ul></div>
+        <div><h4>Follow Us</h4><div style="display:flex; gap:1rem; font-size:1.5rem;"><a href="#"><i class="fab fa-github"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-linkedin"></i></a><a href="#"><i class="fab fa-youtube"></i></a></div></div>
       </div>
       <div class="footer-bottom">
         <span>© 2026 EduSphere. All rights reserved.</span>
-        <span>Built with Three.js, Cannon-es, GSAP</span>
+        <span>Developed by Swatismita Parida · Suusri AI</span>
       </div>
     </div>
   </footer>
@@ -512,7 +432,7 @@
       window.location.href = 'contact.html'; // Navigates to contact page
     });
 
-    // Three.js Physics (Same as before)
+    // Three.js Physics
     const wrapper = document.getElementById('hero-canvas-wrapper');
     if (wrapper) {
       import('three').then(async (THREE) => {
@@ -612,10 +532,12 @@
           objects.push(obj);
         });
 
+        // FIX: Mobile scroll issue - preventDefault only when object is clicked
         let selectedBody = null, selectedMesh = null;
         let dragPlane = new THREE.Plane(), offset = new THREE.Vector3();
         const raycaster = new THREE.Raycaster();
         const mouse = new THREE.Vector2();
+        
         function onPointerDown(event) {
           const rect = renderer.domElement.getBoundingClientRect();
           mouse.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
@@ -639,9 +561,12 @@
                 selectedMesh.material.emissive.setHex(0xd4af37);
                 setTimeout(() => { if (selectedMesh.material) selectedMesh.material.emissive.setHex(0x000000); }, 150);
               }
+              return true; // Return true if object hit
             }
           }
+          return false; // Return false if nothing hit
         }
+
         function onPointerMove(event) {
           if (!selectedBody) return;
           const rect = renderer.domElement.getBoundingClientRect();
@@ -659,6 +584,7 @@
             selectedBody.velocity.set(0, 0, 0);
           }
         }
+
         function onPointerUp(event) {
           if (selectedBody) {
             const vel = new THREE.Vector3((event.movementX || 0) * 0.03, (event.movementY || 0) * 0.03, 0);
@@ -667,18 +593,25 @@
             selectedMesh = null;
           }
         }
+
         renderer.domElement.addEventListener('pointerdown', onPointerDown);
         window.addEventListener('pointermove', onPointerMove);
         window.addEventListener('pointerup', onPointerUp);
+
+        // FIXED Touch Events - Scroll allowed if not dragging object
         renderer.domElement.addEventListener('touchstart', (e) => {
-          e.preventDefault();
           const touch = e.touches[0];
-          onPointerDown({ clientX: touch.clientX, clientY: touch.clientY });
+          const hitObject = onPointerDown({ clientX: touch.clientX, clientY: touch.clientY });
+          if (hitObject) e.preventDefault(); // Block scroll only if object touched
         }, { passive: false });
+
         window.addEventListener('touchmove', (e) => {
+          if (!selectedBody) return; // Allow normal scroll if not dragging
+          e.preventDefault();
           const touch = e.touches[0];
           if (touch) onPointerMove({ clientX: touch.clientX, clientY: touch.clientY });
         }, { passive: false });
+
         window.addEventListener('touchend', (e) => {
           onPointerUp({ movementX: 0, movementY: 0 });
         });

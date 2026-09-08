@@ -56,6 +56,4 @@ A responsive educational website for learning physics through interactive 3D sim
 **Developed by:** Swatismita Parida  
 **Role:** Full Stack Developer Intern  [Suusri AI]
 
-
-🔗 Live Demo: https://edusphere-eductionalproject-5e95f1.netlify.app/ 
-
+🔗 **Live Demo:** https://edusphere-eductionalproject-5e95f1.netlify.app/
