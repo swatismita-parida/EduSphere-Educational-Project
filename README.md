@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # EduSphere - Educational Project
 
 A simple, responsive educational website for learning physics through interactive 3D simulations.
