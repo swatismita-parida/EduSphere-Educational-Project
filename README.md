@@ -61,7 +61,7 @@ node server.js
 
 ## 🌐 Live Demo
 
-https://edusphere-eductionalproject-5e95f1.netlify.app/
+https://edu-sphere-educational-project.vercel.app
 
 ## 👩‍💻 Developer
 
