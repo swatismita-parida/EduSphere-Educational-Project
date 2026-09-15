@@ -61,29 +61,16 @@
     .contact-form input:focus, .contact-form textarea:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 0 3px rgba(212,175,55,0.15); }
     .contact-form button { align-self: flex-start; background: var(--gold); border: none; padding: 0.9rem 2.5rem; border-radius: 60px; font-weight: 700; color: #0b0f1a; cursor: pointer; transition: var(--transition); }
     .contact-form button:hover { background: #e6c75a; transform: scale(1.02); }
+    .contact-form button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .form-hint { color: var(--text-muted); font-size: 0.8rem; margin-top: -1rem; }
     .map-container { border-radius: 24px; overflow: hidden; border: 1px solid var(--border-color); height: 100%; min-height: 350px; background: var(--bg-card); }
     .map-container iframe { width: 100%; height: 100%; min-height: 350px; border: 0; }
-    
-    /* ===== FIX: CONTACT DETAILS BOXES (GAP BADHAYA & TEXT FIX) ===== */
-    .contact-details { 
-      display: grid; 
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-      gap: 2.5rem; /* Gap badhaya */
-      margin-top: 3.5rem; /* Upar se distance badhaya */
-    }
-    .contact-details .card { 
-      min-height: 180px; /* Height fixed ki */
-      display: flex; 
-      flex-direction: column; 
-      justify-content: center; 
-    }
-    .contact-details .card p { 
-      word-break: break-word; /* Text box se bahar nahi niklega */
-    }
-
+    .contact-details { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2.5rem; margin-top: 3.5rem; }
+    .contact-details .card { min-height: 180px; display: flex; flex-direction: column; justify-content: center; }
+    .contact-details .card p { word-break: break-word; }
     .footer { background: #060a12; padding: 3rem 0; color: var(--text-muted); border-top: 1px solid var(--border-color); margin-top: 2rem; }
     .footer a { color: var(--gold); }
-    .footer-grid { display: grid; grid-template-columnts: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
+    .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem; }
     .footer-grid h4 { color: var(--gold); margin-bottom: 1rem; }
     .footer-grid ul { list-style: none; }
     .footer-grid ul li { margin-bottom: 0.5rem; }
@@ -136,11 +123,13 @@
         <div>
           <h3 style="color:var(--gold); margin-bottom:1.5rem;"><i class="fas fa-paper-plane"></i> Send us a message</h3>
           <form class="contact-form" id="contactForm">
-            <input type="text" placeholder="Your Name" required />
-            <input type="email" placeholder="Email Address" required />
-            <input type="text" placeholder="Subject" />
-            <textarea rows="5" placeholder="Tell us about your interest in EduSphere ..."></textarea>
+            <input type="text" id="name" name="name" placeholder="Your Name (min 2 characters)" required minlength="2" maxlength="80" />
+            <input type="email" id="email" name="email" placeholder="Email Address" required />
+            <input type="text" id="subject" name="subject" placeholder="Subject (optional)" maxlength="100" />
+            <textarea id="message" name="message" rows="5" placeholder="Tell us about your interest in EduSphere ..." required minlength="10" maxlength="1000"></textarea>
+            <small class="form-hint">Message: 10–1000 characters</small>
             <button type="submit">Send Message <i class="fas fa-arrow-right"></i></button>
+            <p id="formStatus" style="font-weight:600; display:none;"></p>
           </form>
         </div>
         <div>
@@ -150,8 +139,7 @@
           </div>
         </div>
       </div>
-      
-      <!-- FIXED CONTACT DETAILS BOXES -->
+
       <div class="contact-details">
         <div class="card"><i class="fas fa-envelope"></i><h3>Email</h3><p>hello@edusphere.io</p></div>
         <div class="card"><i class="fas fa-phone-alt"></i><h3>Phone</h3><p>+1 (800) 555-EDU</p></div>
@@ -179,39 +167,6 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-  <script>
-    const themeToggle = document.getElementById('themeToggle');
-    let darkMode = true;
-    themeToggle.addEventListener('click', () => {
-      darkMode = !darkMode;
-      document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
-      themeToggle.innerHTML = darkMode ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
-    });
-    document.getElementById('hamburger').addEventListener('click', () => {
-      document.getElementById('navLinks').classList.toggle('open');
-    });
-    window.addEventListener('scroll', () => {
-      const scrollTop = window.scrollY;
-      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-      document.getElementById('scrollProgress').style.width = progress + '%';
-      document.getElementById('backToTop').classList.toggle('visible', scrollTop > 300);
-    });
-    document.getElementById('backToTop').addEventListener('click', () => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-    document.getElementById('contactForm').addEventListener('submit', (e) => {
-      e.preventDefault();
-      alert('📬 Thank you! Your message has been sent. We\'ll get back to you within 24 hours.');
-      e.target.reset();
-    });
-    gsap.registerPlugin(ScrollTrigger);
-    document.querySelectorAll('.reveal').forEach(el => {
-      gsap.fromTo(el, { opacity: 0, y: 50 }, {
-        opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
-        scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' }
-      });
-    });
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
