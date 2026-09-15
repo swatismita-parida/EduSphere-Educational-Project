@@ -1,59 +1,73 @@
-# EduSphere - Educational Project
+# 🌐 EduSphere — Educational Project
 
-A simple, responsive educational website for learning physics through interactive 3D simulations.
+A responsive educational website for learning physics through **interactive 3D simulations**.
 
-## Tech Stack
-- HTML
-- CSS
-- JavaScript
-- Three.js (3D Graphics)
-- Cannon-es (Physics)
+## ✨ Features
 
-## Pages
-- **index.html** - Home page with 3D physics playground, courses, gallery, and pricing.
-- **about.html** - About page with mission, awards, and lab details.
-- **courses.html** - Courses page listing all available programs.
-- **contact.html** - Contact page with form and map.
+* Interactive 3D physics playground
+* Physics simulations using Three.js and Cannon-es
+* Responsive design
+* Smooth animations
+* Courses, gallery and pricing sections
+* Contact form with backend validation
+* MongoDB database and SMTP email integration
+* Interactive map
 
-## How to Run
-1. Open `index.html` in your browser.
-2. (Recommended) Use VS Code Live Server for best results.
+## 🛠️ Tech Stack
 
-## Files
-- `style.css` - Shared styles.
-- `script.js` - 3D physics logic.
-- `global.png`, `global l. award.png` - Local images.
+**Frontend:** HTML5, CSS3, JavaScript, Three.js, Cannon-es, GSAP
+
+**Backend:** Node.js, Express.js, MongoDB, Mongoose, Nodemailer
+
+## 📂 Pages
+
+* **Home** — 3D physics playground, courses, gallery & pricing
+* **About** — Mission, awards & lab information
+* **Courses** — Available learning programs
+* **Contact** — Contact form & map
+
+## 📁 Project Structure
+
+```text
+EduSphere_educational_project/
+├── frontend/
+│   ├── index.html
+│   ├── about.html
+│   ├── courses.html
+│   ├── contact.html
+│   ├── style.css
+│   ├── script.js
+│   └── images/
+├── backend/
+│   ├── server.js
+│   ├── package.json
+│   └── src/
+│       └── models/
+│           └── Enquiry.js
+└── README.md
+```
+
+## 🚀 How to Run
+
+**Frontend:** Open `frontend/index.html` using **VS Code Live Server**.
+
+**Backend:**
+
+```bash
+cd backend
+npm install
+node server.js
+```
+
+## 🌐 Live Demo
+
+https://edusphere-eductionalproject-5e95f1.netlify.app/
+
+## 👩‍💻 Developer
+
+**Swatismita Parida**
+Full-Stack Developer Intern — **SuuSri AI**
 
 ---
-**Developed by:** Swatismita Parida
-**Full-Stack Devloper Intern:** Web Development Intern# EduSphere - Educational Project
 
-A responsive educational website for learning physics through interactive 3D simulations.
-
-## Tech Stack
-- HTML
-- CSS
-- JavaScript
-- Three.js (3D Graphics)
-- Cannon-es (Physics)
-
-## Pages
-- **index.html** - Home page with 3D physics playground, courses, gallery, and pricing.
-- **about.html** - About page with mission, awards, and lab details.
-- **courses.html** - Courses page listing all available programs.
-- **contact.html** - Contact page with form and map.
-
-## How to Run
-1. Open `index.html` in your browser.
-2. (Recommended) Use VS Code Live Server for best results.
-
-## Files
-- `style.css` - Shared styles.
-- `script.js` - 3D physics logic.
-- `global.png`, `global l. award.png` - Local images.
-
----
-**Developed by:** Swatismita Parida  
-**Role:** Full Stack Developer Intern  [Suusri AI]
-
-🔗 **Live Demo:** https://edusphere-eductionalproject-5e95f1.netlify.app/
+© 2026 EduSphere
